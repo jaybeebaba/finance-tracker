@@ -1,26 +1,34 @@
+import { useEffect } from "react";
 import { useState } from "react";
 import { projectAuth } from "../config/firebaseConfig";
 import useAuthContext from "./useAuthContext";
 
 
 const useLogOut = () =>{
+    const [isCancelled, setIsCancelled] = useState(false)
     const [error, setError] = useState(null)
     const [isPending, setIsPending] = useState(false)
         const { logOut } = useAuthContext()
    
         const logout = async() =>{
             try {
-                setIsPending(true)
-                setError(null)
                 await projectAuth.signOut()
                 logOut()
+                if(!isCancelled){
+                    setIsPending(true)
+                    setError(null)
+                }
             } catch (error) {
-                console.log(error)
-                setIsPending(true)
-                setError(error.message)
+                if(!isCancelled){
+                    setIsPending(true)
+                    setError(error.message)
+                }
+                
             }
             
         }
+
+        useEffect(() => setIsCancelled(true), [])
 
         return {logout, error, isPending}
 }

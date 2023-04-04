@@ -3,6 +3,7 @@ import { useState } from "react";
 import  useAuthContext  from "./useAuthContext"
 
 const useSignup = () =>{
+  const [isCancelled, setIsCancelled] = useState(false)
     const [error, setError] = useState(null)
     const [ isPending, setIsPending] = useState(false)
 
@@ -20,15 +21,19 @@ const useSignup = () =>{
                 await response.user.updateProfile({displayName})
 
                 signIn(response.user)
-                
-                setIsPending(false)
-                setError(null)
+                if(!isCancelled){
+                  setIsPending(false)
+                  setError(null)
+                }
             } catch (error) {
+              if(!isCancelled){
                 setError(error.message)
                 setIsPending(false)
+              }
             }
     }
 
+    useEffect(() => setIsCancelled(true))
     return {error, isPending, signup}
 }
 
