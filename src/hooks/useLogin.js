@@ -17,12 +17,12 @@ const useLogin = () =>{
                const res = await projectAuth.signInWithEmailAndPassword(email, password)
 
                 signIn(res.user)
-                 if(!isCancelled){
+                 if(isCancelled === true){
                     setError(null)
                     setIspending(false)
                  }
             }catch(err){
-                 if(!isCancelled){
+                 if(isCancelled ===true){
                     setError(err.message)
                     setIspending(false)
                  }

@@ -33,7 +33,7 @@ const useSignup = () =>{
                }
             }
     }
-
+    
     useEffect(() => setIsCancelled(true), [])
     return {error, isPending, signup}
 }
