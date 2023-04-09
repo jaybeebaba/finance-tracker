@@ -8,7 +8,9 @@ import useFirestore from "../../hooks/useFirestore"
 const Home = () => {
   const {user} = useAuthContext()
 
-  const {error, documents} = useCollection("transactions", ["uid", "==", user.uid], ["createdAt", "desc"]) 
+  const { documents, error } = useCollection(
+    'transactions', ["uid", "==", user.uid], ['createdAt', 'desc']
+  )
 
   const {deleteDocument} = useFirestore("transactions")
   
