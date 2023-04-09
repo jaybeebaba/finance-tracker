@@ -12,8 +12,6 @@ const TransactionForm = ({uid}) => {
         addDocument({name, amount, uid})
     }
 
-    console.log(response)
-
     useEffect(()=>{
         if(response.success){
             setAmount("")
